@@ -1,0 +1,83 @@
+/* 1. THE OVERLAY
+   This covers the whole screen with a semi-transparent tint. 
+*/
+.kbar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px); /* Modern frosted-glass effect */
+    display: flex;
+    justify-content: center;
+    padding-top: 20vh; /* Sit the palette in the top-third of the screen */
+    z-index: 9999;
+    font-family: sans-serif;
+}
+
+/* 2. THE MODAL 
+   The white "box" that holds the input and the list.
+*/
+.kbar-modal {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    height: fit-content;
+    max-height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow: hidden; /* Clips the list items to the border radius */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. THE INPUT
+   Clean, borderless search field.
+*/
+.kbar-modal input {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    outline: none;
+}
+
+/* 4. THE LIST 
+   A scrollable area for search results.
+*/
+.kbar-list {
+    overflow-y: auto;
+    background: #f9f9f9;
+}
+
+/* 5. INDIVIDUAL ITEMS */
+.kbar-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-left: 4px solid transparent; /* Used for the active highlight */
+}
+
+.kbar-title {
+    font-weight: bold;
+    color: #333;
+    display: block;
+}
+
+.kbar-desc {
+    font-size: 12px;
+    color: #777;
+}
+
+/* 6. THE ACTIVE STATE
+   When a user moves the arrow keys, we add this class.
+*/
+.kbar-item.active {
+    background: #eef6ff;
+    border-left-color: #007bff;
+}
+
+.kbar-item:hover {
+    background: #f0f0f0;
+}
