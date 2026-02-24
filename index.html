@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -11,7 +12,20 @@
         <h1>Kbar editor simulator</h1>
         <p>press Ctrl+k or (cmd + k) to open the command palette</p>
     </div>
+    
+    <script type="module">
+        import { initKbar } from './src/main.js';
+        
+        // Mocking the 'context' object that iD uses
+        const mockContext = {
+            enter: (mode) => console.log(`Entering Mode: ${mode}`),
+            save: () => alert('Changes Saved!'),
+            selectedIDs: () => [] // Returns empty selection by default
+        };
 
+        // Initialize our app
+        initKbar(mockContext);
+    </script>
     
 </body>
 </html>
