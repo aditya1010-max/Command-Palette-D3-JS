@@ -1,39 +1,40 @@
-// this registry is a factory function
-//it returns a list of all possible actions availablein the currebt context
+/**
+ * The Registry is a factory function. 
+ * It returns a list of all possible actions available in the current context.
+ */
+export function kbarRegistry(context) {
+  return function() {
+    // We start with an empty list and build it based on app state
+    const actions = [];
 
-export function kbarRegistry() {
-    return function(context) {
-        // start with empty list amd build it up based on the context
-        const actions = [];
+    // 1. ADD POINT ACTION
+    actions.push({
+      id: 'add-point',
+      title: 'Add Point',
+      description: 'Drop a point on the map',
+      // The logic to execute when this is picked
+      onSelect: () => context.enter('mode-add-point') 
+    });
 
-        // add point action
-        actions.push({
-            id: 'addd-point',
-            name: 'Add point',
-            description: 'Add a point to the graph',
-            onSeclect: () => useContext.enter('mode-add-point')
-        });
+    // 2. CONTEXTUAL ACTION: Only show if something is selected
+    const selection = context.selectedIDs ? context.selectedIDs() : [];
+    if (selection.length > 0) {
+      actions.push({
+        id: 'clear-selection',
+        title: 'Clear Selection',
+        description: `Deselect ${selection.length} items`,
+        onSelect: () => context.enter('mode-browse')
+      });
+    }
 
+    // 3. CORE UTILITY
+    actions.push({
+      id: 'save',
+      title: 'Save Changes',
+      description: 'Upload your edits to OSM',
+      onSelect: () => context.save()
+    });
 
-        // contextual actions - only if something is selected 
-        const selection = context.selectIDs ? context.selectIDs() : [];
-        if (selection.length > 0) {
-            actions.push({
-                id: 'clear-selction',
-                name: 'Clear selection',
-                description: 'Clear the current selection',
-                onSeclect: () => context.enter('mode-browse')
-            });
-        }
-
-        // core utility
-        actions.push({
-            id: "save",
-            name: 'Save changes',
-            description: 'Save changes to the graph',
-            onSeclect: () => context.save()
-        });
-        
-        return actions;
-    };
+    return actions;
+  };
 }
